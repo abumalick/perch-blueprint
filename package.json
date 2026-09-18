@@ -1,0 +1,23 @@
+{
+  "name": "perch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "chmod +x node_modules/.pnpm/node-pty@*/node_modules/node-pty/prebuilds/*/spawn-helper 2>/dev/null || true",
+    "hooks:install": "git config core.hooksPath deploy/git-hooks && echo 'Git hooks active: pre-commit/pre-merge-commit/pre-push (tests), post-commit/post-merge (build).'",
+    "test": "pnpm -r test",
+    "test:scripts": "bash deploy/check-leaks.test.sh && bash deploy/remove-worktree.test.sh &&bash packages/agent/src/hooks/perch-hook.test.sh && bash deploy/parallelism-caps.test.sh && bash .claude/skills/perch-spawn/spawn.test.sh",
+    "typecheck": "pnpm -r typecheck",
+    "serve:build": "deploy/serve-build.sh",
+    "serve:restore": "deploy/serve-build.sh --restore",
+    "serve:heal": "deploy/serve-build.sh --heal",
+    "serve:agent": "deploy/serve-agent.sh",
+    "serve:agent-restore": "deploy/serve-agent.sh --restore",
+    "serve:agent-heal": "deploy/serve-agent.sh --heal",
+    "worktree:remove": "deploy/remove-worktree.sh"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  }
+}

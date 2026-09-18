@@ -1,0 +1,4 @@
+[tools]
+node = "24"
+pnpm = "11"
+"aqua:gitleaks/gitleaks" = "8.30.1"

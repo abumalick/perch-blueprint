@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Final backstop: run the full test suite before anything reaches a remote. This
+# is the only hook that catches paths no commit hook sees — fast-forward merges,
+# `git update-ref`, and commits made with `git commit --no-verify`. A non-zero
+# exit aborts the push (the work stays committed locally; fix and re-push).
+# Bypass with `git push --no-verify` — don't, for main.
+set -euo pipefail
+exec "$(git rev-parse --show-toplevel)/deploy/git-hooks/run-tests.sh" pre-push

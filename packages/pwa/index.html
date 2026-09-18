@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- interactive-widget=resizes-content: when the on-screen keyboard opens, resize the
+         layout viewport (initial containing block) so 100dvh/innerHeight shrink to the area
+         above it — instead of the default resizes-visual, which only shrinks the visual
+         viewport and scrolls it, leaving content pushed under the keyboard on Chrome/Android.
+         iOS Safari ignores this (unsupported) and keeps the visualViewport path in viewport.ts. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>Perch</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+[Unit]
+Description=Perch agent
+After=network-online.target tailscaled.service
+
+[Service]
+ExecStart=/usr/bin/env bash REPO_PATH/deploy/run-agent.sh
+Restart=always
+RestartSec=3
+# The agent spawns the tmux server as a child, so it lives in this unit's
+# cgroup. With the default KillMode=control-group a restart would SIGTERM the
+# whole cgroup and kill every workspace session. KillMode=process stops only
+# the agent, leaving the tmux server and its sessions running across restarts.
+KillMode=process
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Run the full test suite before a merge commit is created. `pre-commit` does
+# NOT fire for merges, so without this hook every `git merge` into main lands
+# completely ungated. A non-zero exit aborts the merge (leaving it to resolve or
+# `git merge --abort`). Does NOT cover fast-forward merges (they create no
+# commit) — pre-push is the backstop for those.
+set -euo pipefail
+exec "$(git rev-parse --show-toplevel)/deploy/git-hooks/run-tests.sh" pre-merge-commit

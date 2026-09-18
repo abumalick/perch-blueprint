@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# After a merge (including fast-forward merges, which create no commit and so fire
+# no post-commit), rebuild the current working tree's PWA. When the merge landed on
+# main, first push main to origin so the canonical branch is never left only-local.
+# The push is best-effort: it never blocks the (already-committed) merge or the
+# rebuild. See build-current.sh.
+set -euo pipefail
+
+REPO="$(git rev-parse --show-toplevel)"
+
+if [ "$(git -C "$REPO" symbolic-ref --quiet --short HEAD 2>/dev/null)" = "main" ]; then
+  echo "Merge landed on main; pushing to origin…"
+  git -C "$REPO" push origin main \
+    || echo "post-merge: 'git push origin main' failed; the merge is committed locally — push it manually." >&2
+fi
+
+exec "$REPO/deploy/build-current.sh"

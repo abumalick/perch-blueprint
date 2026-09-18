@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Run the full test suite before allowing a commit. A non-zero exit aborts the
+# commit. Bypass with `git commit --no-verify` (but then nothing gates the push
+# except pre-push). See run-tests.sh for the shared gate and why merges/pushes
+# need their own hooks.
+set -euo pipefail
+exec "$(git rev-parse --show-toplevel)/deploy/git-hooks/run-tests.sh" pre-commit
